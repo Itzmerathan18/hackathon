@@ -1,0 +1,10 @@
+tensorflow~=2.15.0
+tensorflow-addons
+tensorflow-datasets
+keras
+numpy
+pandas
+scikit-learn
+opencv-python
+matplotlib
+albumentations

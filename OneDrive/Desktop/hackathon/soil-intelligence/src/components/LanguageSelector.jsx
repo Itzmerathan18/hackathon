@@ -1,13 +1,13 @@
 import { useLanguage } from "../context/LanguageContext.jsx";
 
 const options = [
-  { code: "en", label: "English" },
-  { code: "hi", label: "हिन्दी" },
-  { code: "kn", label: "ಕನ್ನಡ" },
+  { code: "en" },
+  { code: "hi" },
+  { code: "kn" },
 ];
 
 export default function LanguageSelector() {
-  const { lang, setLang } = useLanguage();
+  const { lang, setLang, t } = useLanguage();
 
   return (
     <select
@@ -17,7 +17,7 @@ export default function LanguageSelector() {
     >
       {options.map((opt) => (
         <option key={opt.code} value={opt.code}>
-          {opt.label}
+          {t(`languages.${opt.code}`) || opt.code}
         </option>
       ))}
     </select>

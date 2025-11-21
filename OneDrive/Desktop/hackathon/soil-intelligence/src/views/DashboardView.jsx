@@ -151,22 +151,22 @@ export default function DashboardView() {
               <h2 className="text-2xl font-semibold text-emerald-950">
                 {latestTest.test_name}
               </h2>
-              <div className="grid grid-cols-2 gap-4 mt-4 text-sm text-emerald-900/70">
-                <div>
-                  <p className="font-semibold text-emerald-900/80">Location</p>
-                  <p>{latestTest.location}</p>
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <div className="rounded-lg border border-emerald-100 bg-emerald-50/50 p-3">
+                  <p className="font-semibold text-emerald-900/80 text-xs uppercase tracking-[0.1em]">Location</p>
+                  <p className="text-lg font-semibold text-emerald-950 mt-1">{latestTest.location}</p>
                 </div>
-                <div>
-                  <p className="font-semibold text-emerald-900/80">Crop</p>
-                  <p>{latestTest.current_crop || "—"}</p>
+                <div className="rounded-lg border border-emerald-100 bg-emerald-50/50 p-3">
+                  <p className="font-semibold text-emerald-900/80 text-xs uppercase tracking-[0.1em]">Crop</p>
+                  <p className="text-lg font-semibold text-emerald-950 mt-1">{latestTest.current_crop || "—"}</p>
                 </div>
-                <div>
-                  <p className="font-semibold text-emerald-900/80">Moisture</p>
-                  <p>{latestTest.moisture}%</p>
+                <div className="rounded-lg border border-emerald-100 bg-emerald-50/50 p-3">
+                  <p className="font-semibold text-emerald-900/80 text-xs uppercase tracking-[0.1em]">Moisture</p>
+                  <p className="text-lg font-semibold text-emerald-950 mt-1">{parseFloat(latestTest.moisture).toFixed(2)}%</p>
                 </div>
-                <div>
-                  <p className="font-semibold text-emerald-900/80">pH</p>
-                  <p>{latestTest.ph}</p>
+                <div className="rounded-lg border border-emerald-100 bg-emerald-50/50 p-3">
+                  <p className="font-semibold text-emerald-900/80 text-xs uppercase tracking-[0.1em]">pH</p>
+                  <p className="text-lg font-semibold text-emerald-950 mt-1">{parseFloat(latestTest.ph).toFixed(2)}</p>
                 </div>
               </div>
             </div>

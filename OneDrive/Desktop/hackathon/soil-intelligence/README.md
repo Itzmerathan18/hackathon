@@ -44,6 +44,47 @@ Deploy `dist/` to any static host (e.g., Vercel). In Vercel, set:
 - `src/components/` – Shared UI components (Layout, WeatherWidget, Auth screens, voice button, etc.)
 - `src/services/mockApi.js` – Mock AI/ML + weather + sensor data providers
 
+Firebase & Kaggle (image model) integration
+-------------------------------------------
+
+This project ships with an in-memory `mockApi` for demos. To use a real backend and a trained image model:
+
+- Firebase: add client initialization and Firestore / Storage helpers in `src/services/firebase.js`. Provide config via a Vite env file `.env.local` with keys prefixed `VITE_FIREBASE_` (see template below).
+- Image model training: download a Kaggle plant-disease dataset locally, arrange it in `tools/train_model/dataset/{train,val}/{class}/...`, then use the provided `tools/train_model/train.py` to train a transfer-learning classifier. The script saves a `saved_model/` you can deploy to a Cloud Function or an ML endpoint.
+
+Env template (.env.local):
+
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+
+Quick steps:
+
+1. Create a Firebase project and enable Firestore and Storage.
+2. Add the `.env.local` file to the project root (do NOT commit it).
+3. In the app, call `import firebase from './src/services/firebase'` and `firebase.initFirebase()` early (e.g., in `main.jsx`).
+4. To store disease images from the frontend: upload the file using `firebase.uploadImage(file)`, then create a Firestore doc via `firebase.recordDiseaseImage(...)`.
+5. To train an image model locally from a Kaggle dataset:
+
+	- Install Kaggle CLI and authenticate: `pip install kaggle` then put your `kaggle.json` in `~/.kaggle/`.
+	- Download a dataset (example):
+
+```powershell
+kaggle datasets download -d username/dataset-name -p tools/train_model --unzip
+```
+
+	- Prepare the directory `tools/train_model/dataset/train` and `tools/train_model/dataset/val` (one folder per class).
+	- Create a Python virtualenv and install requirements: `python -m venv .venv; .\.venv\Scripts\Activate; pip install -r tools/train_model/requirements.txt`.
+	- Run training: `python tools/train_model/train.py --data_dir tools/train_model/dataset --epochs 10 --batch_size 32`.
+
+Deployment notes:
+
+- For inference in production, host the trained model on an endpoint (Cloud Run, Vertex AI, AWS SageMaker, or a Cloud Function that calls the model). The frontend can then POST images to that endpoint and receive predictions.
+- Alternatively, deploy a small API (Node/Python) that loads the model and serves inference; when a new image is uploaded to Storage, trigger a Cloud Function to run inference and write results back to Firestore.
+
 ## 🧑‍🤝‍🧑 Creators
 - Anushree M – AI Engineer & Agronomy Lead
 - Rathan A S – IoT & Sensor Integrations

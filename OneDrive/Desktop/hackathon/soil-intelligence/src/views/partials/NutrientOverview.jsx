@@ -59,23 +59,27 @@ export default function NutrientOverview({ test }) {
               {nutrients.map((nutrient) => (
                 <div
                   key={nutrient.key}
-                  className="rounded-2xl border border-emerald-100 bg-gradient-to-r from-white to-emerald-50/40 p-4 flex items-center justify-between"
+                  className="rounded-2xl border border-emerald-100 bg-gradient-to-r from-white to-emerald-50/40 p-4 flex flex-col items-start justify-between h-full space-y-2"
                 >
-                  <div>
-                    <p className="text-sm font-semibold text-emerald-900">
-                      {nutrient.label}
-                    </p>
-                    <p className="text-xl font-bold text-emerald-950">
-                      {test[nutrient.key] ?? "—"}
-                      <span className="text-xs font-normal text-emerald-900/70 ml-1">
-                        {test[nutrient.key] !== undefined ? nutrient.unit : ""}
-                      </span>
-                    </p>
-                    <p className="text-[11px] uppercase tracking-[0.4em] text-emerald-800/40">
-                      Optimal {nutrient.optimal}
-                    </p>
+                  <div className="w-full flex items-start justify-between">
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-emerald-900">
+                        {nutrient.label}
+                      </p>
+                      <p className="text-2xl font-bold text-emerald-950 mt-1">
+                        {test[nutrient.key] !== undefined ? parseFloat(test[nutrient.key]).toFixed(2) : "—"}
+                        <span className="text-xs font-normal text-emerald-900/70 ml-1">
+                          {test[nutrient.key] !== undefined ? nutrient.unit : ""}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="ml-2">
+                      {getStatusIcon(test[nutrient.key], nutrient.key)}
+                    </div>
                   </div>
-                  {getStatusIcon(test[nutrient.key], nutrient.key)}
+                  <p className="text-[11px] uppercase tracking-[0.4em] text-emerald-800/40 w-full">
+                    Optimal {nutrient.optimal}
+                  </p>
                 </div>
               ))}
             </div>

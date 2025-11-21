@@ -8,6 +8,11 @@ const LanguageContext = createContext({
 
 const translations = {
   en: {
+      languages: {
+        en: "English",
+        hi: "Hindi",
+        kn: "Kannada",
+      },
     brand: "Soil Intelligence",
     slogan: "AI-Powered AgriTech",
     nav: {
@@ -71,6 +76,11 @@ const translations = {
     },
   },
   hi: {
+      languages: {
+        en: "अंग्रेज़ी",
+        hi: "हिन्दी",
+        kn: "कन्नड़",
+      },
     brand: "मिट्टी बुद्धिमत्ता",
     slogan: "एआई संचालित कृषि तकनीक",
     nav: {
@@ -134,6 +144,11 @@ const translations = {
     },
   },
   kn: {
+      languages: {
+        en: "ಇಂಗ್ಲೀಶ್",
+        hi: "ಹಿಂದಿ",
+        kn: "ಕನ್ನಡ",
+      },
     brand: "ಮಣ್ಣಿನ ಬುದ್ಧಿವಂತಿಕೆ",
     slogan: "ಎಐ ಚಾಲಿತ ಕೃಷಿ ತಂತ್ರಜ್ಞಾನ",
     nav: {
@@ -207,21 +222,44 @@ const getTranslation = (lang, key) => {
 };
 
 export function LanguageProvider({ children }) {
-  const [lang, setLang] = useState("en");
+  const getInitialLang = () => {
+    try {
+      const saved = localStorage.getItem("soil-intel-lang");
+      if (saved && translations[saved]) return saved;
+      const nav = typeof navigator !== "undefined" ? navigator.language : "en";
+      if (nav?.startsWith("hi")) return "hi";
+      if (nav?.startsWith("kn")) return "kn";
+      return "en";
+    } catch (e) {
+      return "en";
+    }
+  };
+
+  const [langState, setLangState] = useState(getInitialLang);
+
+  const setLang = (l) => {
+    if (!translations[l]) return;
+    try {
+      localStorage.setItem("soil-intel-lang", l);
+    } catch (e) {
+      // ignore localStorage errors
+    }
+    setLangState(l);
+  };
 
   const value = useMemo(
     () => ({
-      lang,
+      lang: langState,
       setLang,
       t: (key) => {
         const entry =
-          getTranslation(translations[lang], key) ??
+          getTranslation(translations[langState], key) ??
           getTranslation(translations.en, key);
         return entry ?? key;
       },
       translations,
     }),
-    [lang]
+    [langState]
   );
 
   return (

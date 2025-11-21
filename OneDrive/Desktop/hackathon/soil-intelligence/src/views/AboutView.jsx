@@ -1,4 +1,5 @@
 import { useLanguage } from "../context/LanguageContext.jsx";
+import { Phone, Mail } from "lucide-react";
 
 const creators = [
   { name: "Anushree M", role: "AI Engineer & Agronomy Lead" },
@@ -6,6 +7,12 @@ const creators = [
   { name: "Nikitha Poojari", role: "UX Research & Farmer Success" },
   { name: "Chetan Kumar N K", role: "Data Scientist & ML Ops" },
 ];
+
+// Update these contact values as needed
+const CONTACT = {
+  phone: "+91-7760518409",
+  email: "agreesense@gmail.com",
+};
 
 export default function AboutView() {
   const { t } = useLanguage();
@@ -38,6 +45,22 @@ export default function AboutView() {
             </p>
           </div>
         ))}
+      </div>
+      <div className="rounded-2xl border border-emerald-100 bg-white/90 p-4 shadow-sm flex items-center gap-6">
+        <div className="flex items-center gap-3">
+          <Phone className="w-5 h-5 text-emerald-600" />
+          <div>
+            <p className="text-xs text-emerald-800/70">Mobile</p>
+            <p className="font-semibold text-emerald-950">{CONTACT.phone}</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <Mail className="w-5 h-5 text-emerald-600" />
+          <div>
+            <p className="text-xs text-emerald-800/70">Email</p>
+            <p className="font-semibold text-emerald-950">{CONTACT.email}</p>
+          </div>
+        </div>
       </div>
     </div>
   );
