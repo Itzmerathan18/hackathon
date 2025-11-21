@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #fef8e7, #effaf1 55%, #e7f2ff);
+  color: #052e16;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+.dark body {
+  background: radial-gradient(circle at top, #020617, #0f172a 60%, #020617);
+  color: #f8fafc;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.dark .bg-white\/90,
+.dark .bg-white\/80,
+.dark .bg-white {
+  background-color: rgba(15, 23, 42, 0.92) !important;
+  color: #f8fafc !important;
+}
+
+.dark .bg-emerald-50,
+.dark .bg-emerald-50\/40,
+.dark .bg-emerald-50\/60 {
+  background-color: rgba(30, 41, 59, 0.75) !important;
+  color: #f8fafc !important;
+}
+
+.dark .border-emerald-100,
+.dark .border-green-100 {
+  border-color: rgba(96, 165, 250, 0.45) !important;
+}
+
+.dark .text-emerald-900,
+.dark .text-emerald-800,
+.dark .text-emerald-700 {
+  color: #f8fafc !important;
+  }
+
+.dark table {
+  color: #f8fafc;
+  }
+
